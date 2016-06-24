@@ -89,6 +89,24 @@ public class Thymeleaf3AutoConfiguration {
 			}
 			return resolver;
 	    }
+		
+//		@Bean
+//		public ITemplateResolver cssTemplateResolver() {
+//	        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+//	        resolver.setApplicationContext(applicationContext);
+//	        resolver.setPrefix("/WEB-INF/css/");
+//	        resolver.setTemplateMode(TemplateMode.CSS);
+//	        return resolver;
+//	    }
+//
+//		@Bean
+//		public ITemplateResolver javascriptTemplateResolver() {
+//	        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+//	        resolver.setApplicationContext(applicationContext);
+//	        resolver.setPrefix("/WEB-INF/js/");
+//	        resolver.setTemplateMode(TemplateMode.JAVASCRIPT);
+//	        return resolver;
+//	    }
 
 //		@Bean
 //		public SpringResourceTemplateResolver thymeleafResourceResolver() {
@@ -118,7 +136,7 @@ public class Thymeleaf3AutoConfiguration {
 			}
 			return engine;
 		}
-
+		
 	}
 
 //	@Configuration
@@ -217,6 +235,36 @@ public class Thymeleaf3AutoConfiguration {
 			parameters.putAll(type.getParameters());
 			return new MimeType(type, parameters).toString();
 		}
+		
+//		@Bean
+//	    public ThymeleafViewResolver cssViewResolver() {
+//	        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+//	        resolver.setTemplateEngine(templateEngine(cssTemplateResolver()));
+//	        resolver.setContentType("text/css");
+//	        resolver.setCharacterEncoding(this.properties.getEncoding().name());
+//	        String[] viewName = {"*.css"};
+//	        
+//	        resolver.setViewNames(viewName);
+//	        return resolver;
+//	    }
+//
+//	    @Bean
+//	    public ThymeleafViewResolver javascriptViewResolver() {
+//	        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+//	        resolver.setTemplateEngine(templateEngine(javascriptTemplateResolver()));
+//	        resolver.setContentType("application/javascript");
+//	        resolver.setCharacterEncoding(this.properties.getEncoding().name());
+//	        String[] viewName = {"*.js"};
+//	        
+//	        resolver.setViewNames(viewName);
+//	        return resolver;
+//	    }
+//	    
+//	    private SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+//	        SpringTemplateEngine engine = new SpringTemplateEngine();
+//	        engine.setTemplateResolver(templateResolver);
+//	        return engine;
+//	    }
 
 	}
 
