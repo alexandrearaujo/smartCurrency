@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class CreditCardBillService {
 		AggregateUnmarshaller<ResponseEnvelope> a = new AggregateUnmarshaller<ResponseEnvelope>(ResponseEnvelope.class);
         ResponseEnvelope re = null;
 		try {
-			FileInputStream inputStream = new FileInputStream(new File(System.getProperty("user.home") + "/Downloads/SARAIVA-Jul-16.ofx"));
+			FileInputStream inputStream = new FileInputStream(new File(System.getProperty("user.home") + "/Downloads/SARAIVA-Próxima_Fatura.ofx"));
 			Reader reader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
 			re = (ResponseEnvelope) a.unmarshal(reader);
 		} catch (IOException | OFXParseException e) {
@@ -100,8 +101,12 @@ public class CreditCardBillService {
             		creditCard.setNumber(b.getMessage().getAccount().getAccountNumber());
             		creditCardBill.setCreditCard(creditCard);
             		System.out.println("cartao de credito: " + b.getMessage().getAccount().getAccountNumber());
+            		creditCardBill.setAmount(BigDecimal.valueOf(b.getMessage().getLedgerBalance().getAmount()));
             		System.out.println("balanço final: " + b.getMessage().getLedgerBalance().getAmount());
-            		System.out.println("dataDoArquivo: " + b.getMessage().getLedgerBalance().getAsOfDate());
+            		LocalDate dataVencimento = LocalDateTime.ofInstant(Instant.ofEpochMilli(b.getMessage().getLedgerBalance().getAsOfDate().getTime()), ZoneId.systemDefault()).toLocalDate();
+            		dataVencimento = dataVencimento.plusDays(1);
+            		creditCardBill.setClosingDate(dataVencimento);
+            		System.out.println("dataDoVencimento: " + dataVencimento);
             		List<Transaction> list = b.getMessage().getTransactionList().getTransactions();
             		System.out.println("TRANSAÇÕES\n");
             		for (Transaction transaction : list) {

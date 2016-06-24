@@ -1,17 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" class="no-js">
+<head>
+	<style>
+		thead {color:green;}
+		tbody {color:blue;}
+		tfoot {color:red;}
+	</style>
+</head>
+
 <div class="jumbotron">
-	<h1>TESTE</h1>
+	<h1>Fatura do Cartão de Crédito</h1>
 </div>
 
 <form th:action="@{/teste/executar}" th:method="post" th:object="${creditCardBill}">
+	<fieldset>
+		<legend>Cartão de Crédito</legend>
 
-	<table
-		class="table table-condensed table-bordered table-striped table-hover fixed-table">
+		<div class="form-group">
+			<label class="control-label" th:for="numeroCartao"
+				th:id="numeroCartaoLabel"> <span>Número do Cartão</span>
+			</label>
+			
+			<input  type="text" 
+	                class="form-control" 
+	                id="numeroCartao"
+	                th:field="*{creditCard.number}"/>
+		</div>
+		
+		<div class="form-group">
+            <label class="control-label" th:for="nomeCartao"
+                th:id="nomeCartaoLabel"> <span>Nome do Cartão</span>
+            </label>
+            
+            <input  type="text" 
+                    class="form-control" 
+                    id="nomeCartao"
+                    th:field="*{creditCard.label}"/>
+        </div>
+        
+        
+        <div class="form-group">
+            <label class="control-label" th:for="dataFechamentoFatura"
+                th:id="dataFechamentoFaturaLabel"> <span>Data do Vencimento</span>
+            </label>
+            
+            <input  type="text" 
+                    class="form-control" 
+                    id="dataFechamentoFatura"
+                    th:value="${creditCardBill.closingDate != null ? #temporals.format(creditCardBill.closingDate, 'dd/MM/yyyy') : ''}"/>
+        </div>
+	</fieldset>
+
+	<table class="table table-condensed table-bordered table-striped table-hover fixed-table">
 		<thead>
 			<tr>
-			    <th>DATA</th>
-			    <th>TIPO</th>
+				<th>DATA</th>
+				<th>TIPO</th>
 				<th>DECRICAO</th>
 				<th>VALOR</th>
 			</tr>
@@ -25,6 +69,15 @@
 				<td th:text="${entry?.value}"></td>
 			</tr>
 		</tbody>
+		
+		<tfoot>
+		  <tr>
+		      <td>TOTAL</td>
+		      <td/>
+		      <td/>
+		      <td th:text="*{amount}" />
+		  </tr>
+		</tfoot>
 	</table>
 
 	<button type="submit">TESTE</button>
