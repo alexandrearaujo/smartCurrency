@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" class="no-js">
+<div class="jumbotron">
+	<h1>TESTE</h1>
+</div>
+
+<form th:action="@{/teste/executar}" th:method="post" th:object="${creditCardBill}">
+
+	<table
+		class="table table-condensed table-bordered table-striped table-hover fixed-table">
+		<thead>
+			<tr>
+			    <th>DATA</th>
+			    <th>TIPO</th>
+				<th>DECRICAO</th>
+				<th>VALOR</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="entry : *{entries}">
+				<td th:text="${#temporals.format(entry.date, 'dd/MM/yyyy')}"></td>
+				<td th:text="${entry?.type}"></td>
+				<td th:text="${entry?.description}"></td>
+				<td th:text="${entry?.value}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<button type="submit">TESTE</button>
+</form>
+</html>
