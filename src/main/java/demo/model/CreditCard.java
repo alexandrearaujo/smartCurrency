@@ -1,5 +1,6 @@
 package demo.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,8 +15,10 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class CreditCard {
+public class CreditCard implements Serializable {
 	
+	private static final long serialVersionUID = -4779418085181047025L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

@@ -1,5 +1,6 @@
 package demo.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,8 +16,10 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Entry {
-	
+public class Entry implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -27,6 +30,12 @@ public class Entry {
 	private String description;
 	
 	private String type;
+	
+	private String location;
+	
+	private Integer portion;
+	
+	private Integer portionQuant;
 	
 	private LocalDate date;
 	

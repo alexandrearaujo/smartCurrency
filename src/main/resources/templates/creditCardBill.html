@@ -57,6 +57,8 @@
 				<th>DATA</th>
 				<th>TIPO</th>
 				<th>DECRICAO</th>
+				<th>PARCELA</th>
+				<th>LOCAL</th>
 				<th>VALOR</th>
 			</tr>
 		</thead>
@@ -66,13 +68,17 @@
 				<td th:text="${#temporals.format(entry.date, 'dd/MM/yyyy')}"></td>
 				<td th:text="${entry?.type}"></td>
 				<td th:text="${entry?.description}"></td>
-				<td th:text="${entry?.value}"></td>
+				<td th:text="${entry.portion != null ? (#numbers.formatInteger(entry.portion, 2) + '/' + #numbers.formatInteger(entry.portionQuant, 2)) : ''}"></td>
+				<td th:text="${entry?.location}"></td>
+				<td th:text="${#numbers.formatDecimal(entry.value, 2, 'POINT', 2, 'COMMA')}"></td>
 			</tr>
 		</tbody>
 		
 		<tfoot>
 		  <tr>
 		      <td>TOTAL</td>
+		      <td/>
+		      <td/>
 		      <td/>
 		      <td/>
 		      <td th:text="*{amount}" />
