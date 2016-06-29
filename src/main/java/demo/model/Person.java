@@ -1,8 +1,6 @@
 package demo.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,32 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class CreditCard implements Serializable {
+public class Person implements Serializable {
 	
-	private static final long serialVersionUID = -4779418085181047025L;
+	private static final long serialVersionUID = 306594414386792487L;
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	private String number;
+	private String name;
 	
-	private String label;
-	
-	private LocalDate dueDate;
-	
-	private BigDecimal creditLimit;
+	@OneToOne
+	private User user;
 	
 	@OneToMany
-	private List<CreditCardBill> bills;
+	private List<Entry> entries;
 	
 	@ManyToOne
 	private UserSpace userSpace;
-	
+
 }

@@ -2,7 +2,6 @@ package demo.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,26 +15,24 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class CreditCard implements Serializable {
+public class AccountMonthly implements Serializable {
 	
-	private static final long serialVersionUID = -4779418085181047025L;
+	private static final long serialVersionUID = -6980790888660404340L;
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	private String number;
+	private Integer month;
 	
-	private String label;
+	private Integer year;
 	
-	private LocalDate dueDate;
-	
-	private BigDecimal creditLimit;
-	
-	@OneToMany
-	private List<CreditCardBill> bills;
+	private BigDecimal amount;
 	
 	@ManyToOne
-	private UserSpace userSpace;
+	private Account account;
 	
+	@OneToMany
+	private List<Entry> entries;
+
 }

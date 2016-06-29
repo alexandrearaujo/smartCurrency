@@ -43,5 +43,17 @@ public class Entry implements Serializable {
 	
 	@ManyToOne
 	private CreditCardBill bill;
+	
+	@ManyToOne
+	private Person person;
+	
+	@ManyToOne
+	private AccountMonthly monthlyAccount;
+	
+	@ManyToOne
+	private Category category;
+	
+	@ManyToOne
+	private SubCategory subCategory;
 
 }
