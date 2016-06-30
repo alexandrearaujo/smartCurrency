@@ -2,6 +2,7 @@ package demo.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Category {
 	
 	private String description;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<SubCategory> subCategories;
 	
 	@OneToMany

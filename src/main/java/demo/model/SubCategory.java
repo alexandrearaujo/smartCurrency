@@ -1,6 +1,7 @@
 package demo.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,6 @@ public class SubCategory implements Serializable {
 	private Category category;
 	
 	@OneToMany
-	private Entry entries;
+	private List<Entry> entries;
 	
 }

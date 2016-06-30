@@ -21,7 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 import demo.model.CreditCard;
 import demo.model.CreditCardBill;
 import demo.model.Entry;
+import demo.model.Person;
+import demo.model.User;
+import demo.model.UserSpace;
 import demo.repository.CreditCardBillRepository;
+import demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import net.sf.ofx4j.domain.data.MessageSetType;
 import net.sf.ofx4j.domain.data.ResponseEnvelope;
@@ -40,6 +44,7 @@ import net.sf.ofx4j.io.OFXParseException;
 public class CreditCardBillService {
 	
 	private final CreditCardBillRepository creditCardBillRepository;
+	private final UserRepository userRepository;
 	private CreditCardBill creditCardBill;
 	
 	@Transactional
@@ -95,6 +100,19 @@ public class CreditCardBillService {
         	if (message != null) {
         		List<CreditCardStatementResponseTransaction> bank = ((CreditCardResponseMessageSet) message).getStatementResponses();
             	for (CreditCardStatementResponseTransaction b : bank) {
+            		User user = new User();
+            		user.setPassword("teste");
+            		user.setUsername("teste");
+            		
+            		Person person = new Person();
+            		person.setName("Teste");
+            		person.setUser(user);
+            		
+            		UserSpace userSpace = new UserSpace();
+            		userSpace.setUser(user);
+            		user.setUserSpace(userSpace);
+            		
+            		
             		CreditCardBill creditCardBill = new CreditCardBill();
             		creditCardBill.setEntries(new ArrayList<Entry>());
             		CreditCard creditCard = new CreditCard();
@@ -136,7 +154,18 @@ public class CreditCardBillService {
             			System.out.println("");
             		}
             		
-            		return creditCardBillRepository.save(creditCardBill);
+            		List<CreditCardBill> bills = new ArrayList<CreditCardBill>();
+            		bills.add(creditCardBill);
+            		creditCard.setBills(bills);
+            		List<CreditCard> creditCards = new ArrayList<CreditCard>();
+            		creditCards.add(creditCard);
+            		userSpace.setCreditCards(creditCards);
+            		creditCard.setUserSpace(userSpace);
+            		
+            		userRepository.save(user);
+            		
+//            		return creditCardBillRepository.save(creditCardBill);
+            		return user.getUserSpace().getCreditCards().get(0).getBills().get(0);
             	}
             	
         	}

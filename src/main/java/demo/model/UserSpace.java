@@ -3,7 +3,11 @@ package demo.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -14,16 +18,21 @@ import lombok.Setter;
 @Getter @Setter
 public class UserSpace implements Serializable {
 	
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	@OneToOne
+	@Column(unique = true, nullable = false)
 	private User user;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Person> persons;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<CreditCard> creditCards;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Account> accounts;
 
 }

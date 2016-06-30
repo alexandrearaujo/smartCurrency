@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,9 +30,10 @@ public class Account implements Serializable {
 	private BigDecimal balance;
 	
 	@ManyToOne
+	@Column(unique = true, nullable = false)
 	private UserSpace userSpace;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<AccountMonthly> monthlyEntries;
 	
 }

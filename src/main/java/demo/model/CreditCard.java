@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class CreditCard implements Serializable {
 	
 	private BigDecimal creditLimit;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<CreditCardBill> bills;
 	
 	@ManyToOne
