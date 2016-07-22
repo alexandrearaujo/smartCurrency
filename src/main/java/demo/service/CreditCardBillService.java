@@ -58,7 +58,7 @@ public class CreditCardBillService {
 		AggregateUnmarshaller<ResponseEnvelope> a = new AggregateUnmarshaller<ResponseEnvelope>(ResponseEnvelope.class);
         ResponseEnvelope re = null;
 		try {
-			FileInputStream inputStream = new FileInputStream(new File(System.getProperty("user.home") + "/Downloads/SARAIVA-Jul-16.ofx"));
+			FileInputStream inputStream = new FileInputStream(new File(System.getProperty("user.home") + "/Downloads/SARAIVA-Ago-16.ofx"));
 			Reader reader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
 			re = (ResponseEnvelope) a.unmarshal(reader);
 		} catch (IOException | OFXParseException e) {
@@ -138,11 +138,17 @@ public class CreditCardBillService {
             			entry.setValue(BigDecimal.valueOf(transaction.getAmount()));
             			System.out.println("valor: " + transaction.getAmount());
             			if (transaction.getMemo().contains("PARC")) {
-            				entry.setDescription(transaction.getMemo().substring(0, 14));
-            				String[] parcelamento = transaction.getMemo().substring(18, 25).split("/");
+            				String[] parcelamento = {};
+            				if (transaction.getMemo().contains("SARAIVA")) {
+            					entry.setDescription("Compra na Saraiva");
+            					parcelamento = transaction.getMemo().substring(05, 10).split("/");
+            				} else {
+            					entry.setDescription(transaction.getMemo().substring(0, 14));
+            					parcelamento = transaction.getMemo().substring(18, 25).split("/");
+            					entry.setLocation(transaction.getMemo().substring(25, transaction.getMemo().length()).trim());
+            				}
             				entry.setPortion(Integer.parseInt(parcelamento[0].trim()));
             				entry.setPortionQuant(Integer.parseInt(parcelamento[1].trim()));
-            				entry.setLocation(transaction.getMemo().substring(25, transaction.getMemo().length()).trim());
             			} else if ("PAYMENT".equals(transaction.getTransactionType().name())) {
             				entry.setDescription(transaction.getMemo().substring(0, 23));
             				entry.setLocation(transaction.getMemo().substring(23, transaction.getMemo().length()).trim());

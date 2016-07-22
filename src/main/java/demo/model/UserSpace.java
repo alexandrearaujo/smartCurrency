@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +22,6 @@ public class UserSpace implements Serializable {
 	private Long id;
 	
 	@OneToOne
-	@Column(unique = true, nullable = false)
 	private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL)
